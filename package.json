@@ -10,11 +10,18 @@
 			"commit-msg": "pnpm commitmsg"
 		}
 	},
+	"engines": {
+		"node": ">=16",
+		"pnpm": ">=7"
+	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.6.7",
 		"@commitlint/config-conventional": "^17.6.7",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.2.3",
 		"pre-commit": "^1.2.2"
+	},
+	"dependencies": {
+		"react": "^18.2.0"
 	}
 }
