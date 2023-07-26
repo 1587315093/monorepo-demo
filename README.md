@@ -168,7 +168,7 @@ pnpm dev
 
 ```diff
 	"scripts": {
-	+	"dev:p3": "pnpm --filter=packages3 dev",
++		"dev:p3": "pnpm --filter=packages3 dev",
 		"prepare": "husky install",
 		"commitmsg": "echo \"Commit message validation failed. Please make sure your commit message follows the conventional commit format.\" && exit 1"
 	}
