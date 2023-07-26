@@ -121,3 +121,90 @@ pnpm add axios
 而 `package2` 引入报错~ 因为是 `package1` 的私包
 
 ![image](https://github.com/1587315093/monorepo-demo/assets/77056991/260541f0-479e-45ed-8c9c-86753e6c8a32)
+
+#### 3. 项目
+
+使用 vite 创个 react 项目
+
+```bash
+cd packages
+
+pnpm create vite
+
+# 然后填文件名和模板，这边填的是 package3文件名 然后React+Ts模板
+
+```
+
+然后 `pnpm dev` 也能正常启动
+
+![image](https://github.com/1587315093/monorepo-demo/assets/77056991/ef94f9d0-ad5f-4227-b109-cc715604be40)
+
+但是初始化的一些依赖，下到了私包中，需要手动移到主包的依赖表下
+
+![image](https://github.com/1587315093/monorepo-demo/assets/77056991/3378075c-b7ea-4ef6-af9f-47981a8b1ccd)
+
+移动完后把 `packages3` 的 `node_modules` 删掉，然后在根目录下 `pnpm install`
+
+```bash
+# cd 到 monorepo-demo/
+pnpm install
+
+# cd 到 packages3/
+rm -rf node_modules
+
+# 然后启动packages3的项目
+pnpm dev
+```
+
+一顿命令框框输完后，`packages3` 项目还是可以正常启动的
+
+但是每次都要进入到子包才能启动本地开发？太麻烦了
+
+可以在主包的 `packages.json` 里加一个脚本叫 `dev:p3` 代表这启动 `packages3` 的 `dev` 服务器
+
+`"--filter"` 是一个参数，用于指定 `pnpm` 命令中要操作的子包的名称或路径
+
+```json
+// monorepo-demo/packages.json
+	"scripts": {
+	+	"dev:p3": "pnpm --filter=packages3 dev",
+		"prepare": "husky install",
+		"commitmsg": "echo \"Commit message validation failed. Please make sure your commit message follows the conventional commit format.\" && exit 1"
+	}
+```
+
+然后在主包根目录下来使用 `dev:p3` 去启动 `packages3` 了，太方便辣
+
+```bahs
+pnpm dev:p3
+```
+
+给 `packages1` 和 `packages2` 也初始化下看看，之前有过这两个文件夹，`vite` 创项目要创文件夹，我直接把原来两个的删了
+
+```bash
+rm -rf packages1 && rm -rf packages2
+```
+
+然后再创
+
+```bash
+cd packages　
+# 老样子，但是文件名叫packages1 与　packages2
+pnpm create vite
+```
+
+还是一样的把两个包的依赖删掉，因为都是用的主包的依赖，没差别
+
+主要是为了试试多个项目启动命令
+
+```json
+	"scripts": {
++		"dev:p1": "pnpm --filter=packages1 dev",
++		"dev:p2": "pnpm --filter=packages2 dev",
+		"dev:p3": "pnpm --filter=packages3 dev",
+		"prepare": "husky install",
+		"commitmsg": "echo \"Commit message validation failed. Please make sure your commit message follows the conventional commit format.\" && exit 1"
+	},
+```
+
+这样 `pnpm dev:p1` 或者 `pnpm dev:p2`　就可以启动子包 `packages1` 与　 `packages2` 　了
