@@ -9,11 +9,13 @@
 创建 monorepo-demo 文件夹，进入文件开始初始化
 
 ```bash
-
+# 1. 建文件夹
 mkdir monorepo-demo && cd monorepo-demo
-# 初始化package.json
+
+# 2. 初始化package.json
 pnpm init -w
-# 创建 pnpm-workspace.yaml
+
+# 3. 创建 pnpm-workspace.yaml
 touch  pnpm-workspace.yaml
 ```
 
@@ -78,9 +80,9 @@ pnpm add react -w
 可以看到主包的 `package.json` 中 多了一个 `react` 的依赖,
 
 ```json
-	"dependencies": {
-		"react": "^18.2.0"
-	}
+"dependencies": {
+	"react": "^18.2.0"
+}
 ```
 
 去 `package1` 与 `package2` 与里建个 `ts` 文件看看能不能引入到 `react`
@@ -164,8 +166,7 @@ pnpm dev
 
 `"--filter"` 是一个参数，用于指定 `pnpm` 命令中要操作的子包的名称或路径
 
-```json
-// monorepo-demo/packages.json
+```diff
 	"scripts": {
 	+	"dev:p3": "pnpm --filter=packages3 dev",
 		"prepare": "husky install",
@@ -197,7 +198,7 @@ pnpm create vite
 
 主要是为了试试多个项目启动命令
 
-```json
+```diff
 	"scripts": {
 +		"dev:p1": "pnpm --filter=packages1 dev",
 +		"dev:p2": "pnpm --filter=packages2 dev",
