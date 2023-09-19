@@ -12,11 +12,11 @@
 # 1. 建文件夹
 mkdir monorepo-demo && cd monorepo-demo
 
-# 2. 初始化package.json
-pnpm init -w
-
-# 3. 创建 pnpm-workspace.yaml
+# 2. 创建 pnpm-workspace.yaml
 touch  pnpm-workspace.yaml
+
+# 3. 初始化package.json
+pnpm init -w
 ```
 
 在 pnpm-workspace.yaml 下写入
